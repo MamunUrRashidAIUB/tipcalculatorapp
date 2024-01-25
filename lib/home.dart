@@ -138,7 +138,7 @@ class _tipcalculator extends State<tipcalculator> {
                       ),
                       Padding(
                         padding: const EdgeInsets.all(25.0),
-                        child: Text("200"),
+                        child: Text("\$ ${calculatetotaltip(billammount, splitby, tippercentage)}"),
                       )
                     ],
                   ),
@@ -146,8 +146,9 @@ class _tipcalculator extends State<tipcalculator> {
                     children: [
                       Text("$tippercentage %"),
                       Slider(
-                        min: 0,
-                        max: 100,
+                          min: 0,
+                          max: 100,
+                          divisions: 10,
                           value: tippercentage.toDouble(),
                           onChanged: (double newValue) {
                             setState(() {
@@ -163,5 +164,22 @@ class _tipcalculator extends State<tipcalculator> {
         ),
       ),
     );
+  }
+
+  calculatetotalperperson(double totaltip, double billammount, int splitby) {
+    var totalperperson = (totaltip + billammount) / splitby;
+    return totalperperson;
+  }
+
+  calculatetotaltip(double billammount, int splitby, int tippercentage) {
+    double totaltip = 0.0;
+    if (billammount < 0 ||
+        billammount.toString().isEmpty ||
+        billammount == null) {
+      //no go}
+    } else {
+      totaltip = (billammount + tippercentage) / 100;
+    }
+    return totaltip;
   }
 }
